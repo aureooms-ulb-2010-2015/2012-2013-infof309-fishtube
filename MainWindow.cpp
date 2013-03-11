@@ -1,6 +1,6 @@
 #include "MainWindow.h"
-#include "ui_mainwindow.h"
 
+#include <QApplication>
 #include <QVBoxLayout>
 #include <QDesktopWidget>
 #include "ImageDisplayerWidgetImpl.h"

@@ -112,10 +112,6 @@ HEADERS += \
     Target_CondensationTarget.h \
     Algorithm_Sub_Tagging.h
 
-
-FORMS    += mainwindow.ui
-
-
 RESOURCES += img.qrc
 
 OTHER_FILES += \
