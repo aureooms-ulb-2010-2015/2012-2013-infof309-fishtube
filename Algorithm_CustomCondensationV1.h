@@ -54,6 +54,7 @@ private:
 	Targets currentlyTracked;
 	size_t pollingRange = 10;
 	size_t generatingRange = 1;
+	int spreadRange = 20;
 	int minScore = 50;
 	Densities density;
 	Sub_Tagging tagging;
@@ -76,7 +77,7 @@ private:
 	void spread(Deltas deltas);
 
 	static Delta shift(Density&, const Density&);
-	static void spread(Density&, Delta delta);
+	static void spread(Density&, Delta delta, int spreadRange);
 
 public:
 

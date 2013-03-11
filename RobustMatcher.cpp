@@ -168,7 +168,7 @@ cv::Mat RobustMatcher::match(cv::Mat& image1, cv::Mat& image2, // input images
     this->_extractor->compute(image1,keypoints1,descriptors1);
     this->_extractor->compute(image2,keypoints2,descriptors2);
 
-
+	matches.clear();
 	if(keypoints1.empty() || keypoints2.empty()) return cv::Mat();
 
     //std::cout << "descriptor matrix size: " << descriptors1.rows << " by " << descriptors1.cols << std::endl;

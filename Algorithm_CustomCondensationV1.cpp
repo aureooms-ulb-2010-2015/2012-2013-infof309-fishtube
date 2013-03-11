@@ -159,6 +159,13 @@ void CustomCondensationV1::ConDensAte(const cv::Mat &in, cv::Mat &out, Target& t
 
 	target.picture = in(target.rect).clone();
 
+	// define destination for resized image
+	cv::Rect roi( cv::Point( 0, 0 ), target.picture.size());
+	cv::Mat destination = out(roi);
+
+	// copy resized image to destination in out
+	target.picture.copyTo(destination);
+
 }
 
 void CustomCondensationV1::pollNewTargets(const cv::Mat &in, cv::Mat &out){
@@ -252,10 +259,10 @@ CustomCondensationV1::Deltas CustomCondensationV1::shift(const Densities& prevDe
 }
 
 void CustomCondensationV1::spread(Deltas deltas){
-	spread(density.x, deltas.x);
-	spread(density.y, deltas.y);
-	spread(density.w, deltas.w);
-	spread(density.h, deltas.h);
+	spread(density.x, deltas.x, spreadRange);
+	spread(density.y, deltas.y, spreadRange);
+	spread(density.w, deltas.w, spreadRange);
+	spread(density.h, deltas.h, spreadRange);
 }
 
 CustomCondensationV1::Delta CustomCondensationV1::shift(Density& density, const Density& prevDensity){
@@ -297,9 +304,9 @@ CustomCondensationV1::Delta CustomCondensationV1::shift(Density& density, const 
 	return delta;
 }
 
-void CustomCondensationV1::spread(Density& density, Delta delta){
+void CustomCondensationV1::spread(Density& density, Delta delta, int spreadRange){
 	Density temp = density;
-	int blurRange = abs(delta) + 5;
+	int blurRange = abs(delta) + spreadRange;
 	int size = density.size();
 	for(int i = 0; i < size; ++i){
 		int val = 0;
