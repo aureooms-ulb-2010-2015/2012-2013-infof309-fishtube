@@ -6,7 +6,9 @@
 #include <iostream>
 
 FaceDetector_Surf::FaceDetector_Surf() {
-	std::string filename = "haarcascade_frontalface_default.xml";
+    std::string filename = "lpbcascade_frontalface.xml";
+    this->_corner.x=0;
+    this->_corner.y=0;
 	if (!this->_classifier.load(filename)) std::cout << "can't load file : " << filename << std::endl;
 }
 
@@ -51,6 +53,9 @@ void FaceDetector_Surf::process(const cv::Mat &in, cv::Mat &out) {
                 name ="John Doe";
             }
             cv::putText(out, name, label, cv::FONT_HERSHEY_COMPLEX_SMALL, 0.8, cv::Scalar(255,0,0), 1, CV_AA);
+            std::cout << "\n corner x avant :"<< this->getCorner().x ;
+            std::cout << " | corner x apres :"<< faces.at(0).br().x << std::endl;
+            this->setCorner((faces.at(0)).br());
         }
     } catch(std::exception e){}
 
