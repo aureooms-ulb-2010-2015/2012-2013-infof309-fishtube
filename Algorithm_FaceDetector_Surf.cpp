@@ -38,12 +38,17 @@ void FaceDetector_Surf::process(const cv::Mat &in, cv::Mat &out) {
 
     try {
         if (faces.size()>0){
-            if (recognize(in, faces.at(0))) {
-                cv::Point label;
-                label.x=((faces.at(0)).br()).x+10;
-                label.y=((faces.at(0)).br()).y+10;
-                cv::putText(out, "Simon", label, cv::FONT_HERSHEY_COMPLEX_SMALL, 0.8, cv::Scalar(255,0,0), 1, CV_AA);
+            bool recon = recognize(in, faces.at(0));
+            std::string name="";
+            cv::Point label;
+            label.x=((faces.at(0)).br()).x+10;
+            label.y=((faces.at(0)).br()).y+10;
+            if (recon) {
+                name ="Simon";
+            }else {
+                name ="John Doe";
             }
+            cv::putText(out, name, label, cv::FONT_HERSHEY_COMPLEX_SMALL, 0.8, cv::Scalar(255,0,0), 1, CV_AA);
         }
     } catch(std::exception e){}
 
