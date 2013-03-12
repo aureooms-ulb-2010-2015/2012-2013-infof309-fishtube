@@ -18,10 +18,11 @@ public:
 	typedef std::pair<size_t,size_t> Match;
 	typedef std::vector<Match> Matches;
 	typedef int Score;
+	typedef std::pair<Score, Match> MatchingScore;
 	typedef std::multimap<Score, Match> MatchingScores;
 
 private:
-	static uint32_t NEXT_ID;
+	uint32_t NEXT_ID = ~0;
 
 	Targets _previousTargets;
 	Sub_Tagging tagging;

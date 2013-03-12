@@ -2,8 +2,6 @@
 #include <cmath>
 #include <iostream>
 
-uint32_t FeatureProjection::NEXT_ID = ~0;
-
 FeatureProjection::FeatureProjection():tagging(10, 0.01, cv::Size(10,10)){}
 
 void FeatureProjection::process(const cv::Mat &in, cv::Mat &out) {
@@ -35,9 +33,9 @@ void FeatureProjection::process(const cv::Mat &in, cv::Mat &out) {
 
 
 	//UPDATE AND DRAW MATCHED ITEMS
-	for(size_t k = 0; k < matches.size(); ++k){
-		size_t i = matches.at(k).first;
-		size_t j = matches.at(k).second;
+	for(const Match& match : matches){
+		size_t i = match.first;
+		size_t j = match.second;
 		newTargets.at(j).age = this->_previousTargets.at(i).age + AGE_BONUS;
 		newTargets.at(j).id  = this->_previousTargets.at(i).id;
 
@@ -57,14 +55,10 @@ void FeatureProjection::process(const cv::Mat &in, cv::Mat &out) {
 	}
 
 	//REMOVE MATCHED OLD TARGETS
-	std::vector<bool> isMatched_previousTargets;
-	for(size_t i = 0; i < this->_previousTargets.size(); ++i){
-		isMatched_previousTargets.push_back(false);
-	}
+	std::vector<bool> isMatched_previousTargets(this->_previousTargets.size(),false);
 
-	for(size_t k = 0; k < matches.size(); ++k){
-		size_t i = matches.at(k).first;
-		isMatched_previousTargets[i] = true;
+	for(const Match& match : matches){
+		isMatched_previousTargets[match.first] = true;
 	}
 
 	size_t j = 0;
@@ -98,8 +92,8 @@ void FeatureProjection::process(const cv::Mat &in, cv::Mat &out) {
 			int temp_y = target.y[l-1];
 			target.x[l-1] += delta_x;
 			target.y[l-1] += delta_y;
-			delta_x = (target.x[l-1] + temp_x)/2;
-			delta_y = (target.y[l-1] + temp_y)/2;
+			delta_x = temp_x + delta_x/2;
+			delta_y = temp_y + delta_y/2;
 		}
 
 		cv::Rect previous = target.rect;
@@ -115,10 +109,8 @@ void FeatureProjection::process(const cv::Mat &in, cv::Mat &out) {
 		int x = target.x[D-1];
 		int y = target.y[D-1];
 		for(size_t l = D - 1; l > 0; --l){
-			int temp_x = target.x[l-1];
-			int temp_y = target.y[l-1];
-			x = temp_x + x/2;
-			y = temp_y + y/2;
+			x = target.x[l-1] + x/2;
+			y = target.y[l-1] + y/2;
 		}
 
 		cv::Rect previous = target.rect;
@@ -161,8 +153,8 @@ FeatureProjection::MatchingScores FeatureProjection::generateMatchingScores(cons
 				continue;
 			}
 			int score = -(ndelta_h + ndelta_w + ndelta_x + ndelta_y);
-			std::pair<size_t,size_t> couple(i,j);
-			scores.insert(std::pair<int, std::pair<size_t,size_t> >(score, couple));
+			Match couple(i,j);
+			scores.insert(MatchingScore(score, couple));
 		}
 	}
 
@@ -170,16 +162,10 @@ FeatureProjection::MatchingScores FeatureProjection::generateMatchingScores(cons
 }
 
 FeatureProjection::Matches FeatureProjection::generateMatches(const MatchingScores& scores, size_t newTargetsSize) const{
-	std::vector<bool> isFree_previousTargets;
-	for(size_t i = 0; i < this->_previousTargets.size(); ++i){
-		isFree_previousTargets.push_back(true);
-	}
+	std::vector<bool> isFree_previousTargets(this->_previousTargets.size(),true);
 	size_t amount_freePreviousTargets = this->_previousTargets.size();
 
-	std::vector<bool> isFree_newTargets;
-	for(size_t i = 0; i < newTargetsSize; ++i){
-		isFree_newTargets.push_back(true);
-	}
+	std::vector<bool> isFree_newTargets(newTargetsSize,true);
 	size_t amount_freeNewTargets = newTargetsSize;
 
 	MatchingScores::const_reverse_iterator it_scores = scores.rbegin();
@@ -190,7 +176,7 @@ FeatureProjection::Matches FeatureProjection::generateMatches(const MatchingScor
 		size_t j = (*it_scores).second.second;
 
 		if(isFree_previousTargets[i] && isFree_newTargets[j]){
-			result.push_back(std::pair<size_t,size_t>(i,j));
+			result.push_back(Match(i,j));
 			isFree_previousTargets[i] = false;
 			isFree_newTargets[j] = false;
 			--amount_freePreviousTargets;
@@ -205,13 +191,14 @@ void FeatureProjection::writeFishCount(cv::Mat& out, int nbFishs){
 
 
 	cv::Point point;
-	point.x=20;
-	point.y=20;
+	point.x = 20;
+	point.y = 20;
 
 
-	std::string fishs_ = static_cast<std::ostringstream*>( &(std::ostringstream() << nbFishs) )->str();
+	std::ostringstream text;
+	text << "Number of Fishs : " << nbFishs;
 
-	cv::putText(out, "Number of Fishs : "+fishs_, point, cv::FONT_HERSHEY_COMPLEX_SMALL, 0.8, cv::Scalar(255,0,0), 1, CV_AA);
+	cv::putText(out, text.str(), point, cv::FONT_HERSHEY_COMPLEX_SMALL, 0.8, cv::Scalar(255,0,0), 1, CV_AA);
 }
 
 void FeatureProjection::drawTarget(cv::Mat &out, const Target &target, cv::Scalar color){
