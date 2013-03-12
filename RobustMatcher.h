@@ -59,6 +59,10 @@ public:
         this->_refineF = flag;
     }
 
+    bool getRecognition() {
+      return this->_reconized;
+    }
+
     int ratioTest(std::vector<std::vector<cv::DMatch> >& matches);
 
     void symmetryTest(const std::vector<std::vector<cv::DMatch> >& matches1,
