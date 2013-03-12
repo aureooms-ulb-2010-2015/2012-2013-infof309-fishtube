@@ -15,6 +15,7 @@ void FeatureProjection::process(const cv::Mat &in, cv::Mat &out) {
 
 	for(cv::Rect rect : tagging.process(in)){
 		newTargets.push_back(Target(rect));
+		cv::rectangle(out, rect, cv::Scalar(0,0,0));
 	}
 
 
@@ -39,6 +40,13 @@ void FeatureProjection::process(const cv::Mat &in, cv::Mat &out) {
 		size_t j = matches.at(k).second;
 		newTargets.at(j).age = this->_previousTargets.at(i).age + AGE_BONUS;
 		newTargets.at(j).id  = this->_previousTargets.at(i).id;
+
+		//UPDATE PROJECTION
+		for(size_t l = 1; l < D; ++l){
+			newTargets.at(j).x[l] = newTargets.at(j).x[l-1] - this->_previousTargets.at(i).x[l-1];
+			newTargets.at(j).y[l] = newTargets.at(j).y[l-1] - this->_previousTargets.at(i).y[l-1];
+		}
+
 		if(newTargets.at(j).age > AGE_TRUST){
 			drawTarget(out, newTargets.at(j), cv::Scalar(0, 122, 0));
 			++nbFishs;
@@ -68,17 +76,58 @@ void FeatureProjection::process(const cv::Mat &in, cv::Mat &out) {
 		}
 	}
 
-	//DECREMENT AGE ON OLD TARGETS
+
+
+	//DECREMENT AGE ON MISSING TARGETS
 	for(size_t i = 0; i < this->_previousTargets.size(); ++i){
+		cv::rectangle(out, this->_previousTargets.at(i).rect, cv::Scalar(90,0,90));
 		this->_previousTargets.at(i).age -= AGE_PENALTY;
-		if(this->_previousTargets.at(i).age > AGE_DIE){
-			drawTarget(out, this->_previousTargets.at(i), cv::Scalar(122, 0, 0));
-		}
-		else{
+		if(this->_previousTargets.at(i).age <= AGE_DIE){
 			this->_previousTargets.erase(this->_previousTargets.begin()+i);
 			--i;
 		}
 	}
+
+	//PROJECTION FOR MISSING TARGETS
+
+	for(Target& target : this->_previousTargets){
+		int delta_x = target.x[D-1];
+		int delta_y = target.y[D-1];
+		for(size_t l = D - 1; l > 0; --l){
+			int temp_x = target.x[l-1];
+			int temp_y = target.y[l-1];
+			target.x[l-1] += delta_x;
+			target.y[l-1] += delta_y;
+			delta_x = (target.x[l-1] + temp_x)/2;
+			delta_y = (target.y[l-1] + temp_y)/2;
+		}
+
+		cv::Rect previous = target.rect;
+		int x = target.x[0] - previous.width/2;
+		int y = target.y[0] - previous.height/2;
+		target.rect = cv::Rect(x,y,previous.width,previous.height);
+
+		drawTarget(out, target, cv::Scalar(122, 0, 0));
+	}
+
+	//FUTURE FOR NEW TARGETS
+	for(const Target& target : newTargets){
+		int x = target.x[D-1];
+		int y = target.y[D-1];
+		for(size_t l = D - 1; l > 0; --l){
+			int temp_x = target.x[l-1];
+			int temp_y = target.y[l-1];
+			x = temp_x + x/2;
+			y = temp_y + y/2;
+		}
+
+		cv::Rect previous = target.rect;
+		x -= previous.width/2;
+		y -= previous.height/2;
+
+		cv::rectangle(out, cv::Rect(x,y,previous.width,previous.height), cv::Scalar(0, 0, 122));
+	}
+
 
 	//GENERATE IDS FOR NEW TARGETS
 
@@ -91,7 +140,7 @@ void FeatureProjection::process(const cv::Mat &in, cv::Mat &out) {
 
 	//ADD NEW TARGETS TO HISTORY
 	this->_previousTargets.insert(this->_previousTargets.end(),newTargets.begin(),newTargets.end());
-
+	//std::cout << this->_previousTargets.size() << std::endl;
 	this->writeFishCount(out,nbFishs);
 	return;
 }
