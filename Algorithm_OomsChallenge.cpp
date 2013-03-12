@@ -104,7 +104,7 @@ void OomsChallenge::process(const cv::Mat &in, cv::Mat &out) {
 	size_t j = 0;
 	for(size_t k = 0; k < isMatched_previousTargets.size(); ++k){
 		size_t i = k-j;
-		if(isMatched_previousTargets[i]){
+		if(isMatched_previousTargets[k]){
 			this->_previousTargets.erase(this->_previousTargets.begin()+i);
 			++j;
 		}
