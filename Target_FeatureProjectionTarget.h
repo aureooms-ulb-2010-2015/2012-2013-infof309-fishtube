@@ -5,11 +5,9 @@
 #include <opencv2/core/core.hpp>
 
 class FeatureProjectionTarget{
-private:
-	std::string _id;
-	static uint32_t NEXT_ID;
 
 public:
+	std::string id;
 	int x;
 	int y;
 	double speed;
@@ -21,8 +19,6 @@ public:
 
 	FeatureProjectionTarget(cv::Rect);
 	FeatureProjectionTarget(int, int, cv::Scalar, cv::Mat);
-
-	std::string getId() const{ return this->_id; }
 };
 
 #endif // TARGET_FEATUREPROJECTIONTARGET_H

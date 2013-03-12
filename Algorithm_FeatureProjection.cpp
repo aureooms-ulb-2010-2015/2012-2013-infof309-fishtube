@@ -2,6 +2,8 @@
 #include <cmath>
 #include <iostream>
 
+uint32_t FeatureProjection::NEXT_ID = ~0;
+
 FeatureProjection::FeatureProjection():tagging(10, 0.01, cv::Size(10,10)){}
 
 void FeatureProjection::process(const cv::Mat &in, cv::Mat &out) {
@@ -36,6 +38,7 @@ void FeatureProjection::process(const cv::Mat &in, cv::Mat &out) {
 		size_t i = matches.at(k).first;
 		size_t j = matches.at(k).second;
 		newTargets.at(j).age = this->_previousTargets.at(i).age + AGE_BONUS;
+		newTargets.at(j).id  = this->_previousTargets.at(i).id;
 		if(newTargets.at(j).age > AGE_TRUST){
 			drawTarget(out, newTargets.at(j), cv::Scalar(0, 122, 0));
 			++nbFishs;
@@ -75,6 +78,15 @@ void FeatureProjection::process(const cv::Mat &in, cv::Mat &out) {
 			this->_previousTargets.erase(this->_previousTargets.begin()+i);
 			--i;
 		}
+	}
+
+	//GENERATE IDS FOR NEW TARGETS
+
+	for(Target& target : newTargets){
+		if(target.id != "") continue;
+		std::ostringstream stream;
+		stream << ++NEXT_ID;
+		target.id = stream.str();
 	}
 
 	//ADD NEW TARGETS TO HISTORY
@@ -168,6 +180,6 @@ void FeatureProjection::drawTarget(cv::Mat &out, const Target &target, cv::Scala
 	point.x = target.rect.x + target.rect.width + 10;
 	point.y = target.rect.y + target.rect.height + 10;
 
-	cv::putText(out, target.getId(), point, cv::FONT_HERSHEY_COMPLEX_SMALL, 0.8, color, 1, CV_AA);
+	cv::putText(out, target.id, point, cv::FONT_HERSHEY_COMPLEX_SMALL, 0.8, color, 1, CV_AA);
 
 }

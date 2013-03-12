@@ -20,6 +20,8 @@ public:
 	typedef std::multimap<Score, Match> MatchingScores;
 
 private:
+	static uint32_t NEXT_ID;
+
 	Targets _previousTargets;
 	Sub_Tagging tagging;
 
