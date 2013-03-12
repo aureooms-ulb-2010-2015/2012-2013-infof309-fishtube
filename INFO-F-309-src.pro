@@ -54,8 +54,7 @@ SOURCES += \
     Algorithm_BinaryMaskWithOriginalFrame.cpp \
     Matcher_TargetMatcherV1.cpp \
     Algorithm_CustomCondensationV1.cpp \
-    Algorithm_FeatureProjection.cpp \
-    Target_FeatureProjectionTarget.cpp
+    Algorithm_FeatureProjection.cpp
 
 
 HEADERS += \

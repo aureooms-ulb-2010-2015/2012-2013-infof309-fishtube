@@ -12,7 +12,8 @@
 
 class FeatureProjection : public FrameProcessor {
 public:
-	typedef FeatureProjectionTarget Target;
+	static const size_t D = 5;
+	typedef FeatureProjectionTarget<D> Target;
 	typedef std::vector<Target> Targets;
 	typedef std::pair<size_t,size_t> Match;
 	typedef std::vector<Match> Matches;
@@ -33,8 +34,8 @@ private:
 	const int MAXSIZE = 40;
 	const int MINSIZE = 5;
 
-	const int MAXDIST = 40;
-	const int MAXTRANSFORM = 40;
+	const int MAXDIST = 10;
+	const int MAXTRANSFORM = 10;
 
 
 public:

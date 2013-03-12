@@ -4,21 +4,22 @@
 #include <string>
 #include <opencv2/core/core.hpp>
 
-class FeatureProjectionTarget{
+template<size_t D> class FeatureProjectionTarget{
 
 public:
 	std::string id;
-	int x;
-	int y;
-	double speed;
-	double acceleration;
-	cv::Scalar color;
-	cv::Mat model;
+	int x[D];
+	int y[D];
 	cv::Rect rect;
 	int age;
 
-	FeatureProjectionTarget(cv::Rect);
-	FeatureProjectionTarget(int, int, cv::Scalar, cv::Mat);
+	FeatureProjectionTarget(cv::Rect rect):rect(rect), age(0){
+		x[0] = rect.x + rect.width/2;
+		y[0] = rect.y + rect.height/2;
+		for(size_t i = 1; i < D; ++i){
+			x[i] = y[i] = 0;
+		}
+	}
 };
 
 #endif // TARGET_FEATUREPROJECTIONTARGET_H
