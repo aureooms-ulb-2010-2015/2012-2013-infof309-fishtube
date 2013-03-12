@@ -54,7 +54,8 @@ SOURCES += \
     Algorithm_BinaryMaskWithOriginalFrame.cpp \
     Matcher_TargetMatcherV1.cpp \
     Algorithm_CustomCondensationV1.cpp \
-    Algorithm_FeatureProjection.cpp
+    Algorithm_FeatureProjection.cpp \
+    Target_FeatureProjectionTarget.cpp
 
 
 HEADERS += \
@@ -112,7 +113,8 @@ HEADERS += \
     Target_CondensationTargetV1.h \
     Target_CondensationTarget.h \
     Algorithm_Sub_Tagging.h \
-    Algorithm_FeatureProjection.h
+    Algorithm_FeatureProjection.h \
+    Target_FeatureProjectionTarget.h
 
 RESOURCES += img.qrc
 

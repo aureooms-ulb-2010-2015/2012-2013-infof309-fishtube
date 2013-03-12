@@ -37,11 +37,11 @@ void FeatureProjection::process(const cv::Mat &in, cv::Mat &out) {
 		size_t j = matches.at(k).second;
 		newTargets.at(j).age = this->_previousTargets.at(i).age + AGE_BONUS;
 		if(newTargets.at(j).age > AGE_TRUST){
-			cv::rectangle(out, newTargets.at(j).rect, cv::Scalar(0, 122, 0), 1, 8, 0 );
+			drawTarget(out, newTargets.at(j), cv::Scalar(0, 122, 0));
 			++nbFishs;
 		}
 		else if(newTargets.at(j).age > AGE_MID){
-			cv::rectangle(out, newTargets.at(j).rect, cv::Scalar(0, 105, 250), 1, 8, 0 );
+			drawTarget(out, newTargets.at(j), cv::Scalar(0, 105, 250));
 		}
 	}
 
@@ -69,7 +69,7 @@ void FeatureProjection::process(const cv::Mat &in, cv::Mat &out) {
 	for(size_t i = 0; i < this->_previousTargets.size(); ++i){
 		this->_previousTargets.at(i).age -= AGE_PENALTY;
 		if(this->_previousTargets.at(i).age > AGE_DIE){
-			cv::rectangle(out, this->_previousTargets.at(i).rect, cv::Scalar(122, 0, 0), 1, 8, 0 );
+			drawTarget(out, this->_previousTargets.at(i), cv::Scalar(122, 0, 0));
 		}
 		else{
 			this->_previousTargets.erase(this->_previousTargets.begin()+i);
@@ -84,9 +84,9 @@ void FeatureProjection::process(const cv::Mat &in, cv::Mat &out) {
 	return;
 }
 
-std::multimap<int, std::pair<size_t,size_t> > FeatureProjection::generateMatchingScores(const std::vector<Target>& newTargets) const{
+FeatureProjection::MatchingScores FeatureProjection::generateMatchingScores(const Targets& newTargets) const{
 
-	std::multimap<int, std::pair<size_t,size_t> > scores;
+	MatchingScores scores;
 
 
 	for(size_t i = 0; i < this->_previousTargets.size(); ++i){
@@ -108,7 +108,7 @@ std::multimap<int, std::pair<size_t,size_t> > FeatureProjection::generateMatchin
 	return scores;
 }
 
-std::vector<std::pair<size_t,size_t> > FeatureProjection::generateMatches(const std::multimap<int, std::pair<size_t,size_t> >& scores, size_t newTargetsSize) const{
+FeatureProjection::Matches FeatureProjection::generateMatches(const MatchingScores& scores, size_t newTargetsSize) const{
 	std::vector<bool> isFree_previousTargets;
 	for(size_t i = 0; i < this->_previousTargets.size(); ++i){
 		isFree_previousTargets.push_back(true);
@@ -121,9 +121,9 @@ std::vector<std::pair<size_t,size_t> > FeatureProjection::generateMatches(const 
 	}
 	size_t amount_freeNewTargets = newTargetsSize;
 
-	std::multimap<int, std::pair<size_t,size_t> >::const_reverse_iterator it_scores = scores.rbegin();
+	MatchingScores::const_reverse_iterator it_scores = scores.rbegin();
 
-	std::vector<std::pair<size_t,size_t> > result;
+	Matches result;
 	while(amount_freePreviousTargets > 0 && amount_freeNewTargets > 0 && it_scores != scores.rend()){
 		size_t i = (*it_scores).second.first;
 		size_t j = (*it_scores).second.second;
@@ -151,4 +151,23 @@ void FeatureProjection::writeFishCount(cv::Mat& out, int nbFishs){
 	std::string fishs_ = static_cast<std::ostringstream*>( &(std::ostringstream() << nbFishs) )->str();
 
 	cv::putText(out, "Number of Fishs : "+fishs_, point, cv::FONT_HERSHEY_COMPLEX_SMALL, 0.8, cv::Scalar(255,0,0), 1, CV_AA);
+}
+
+void FeatureProjection::drawTarget(cv::Mat &out, const Target &target, cv::Scalar color){
+	cv::rectangle(out, target.rect, color, 1, 8, 0 );
+
+	cv::Point point;
+	point.x = target.rect.x + target.rect.width + 10;
+	point.y = target.rect.y - 10;
+
+	std::ostringstream text;
+	text << target.age;
+	cv::putText(out, text.str(), point, cv::FONT_HERSHEY_COMPLEX_SMALL, 0.8, color, 1, CV_AA);
+
+
+	point.x = target.rect.x + target.rect.width + 10;
+	point.y = target.rect.y + target.rect.height + 10;
+
+	cv::putText(out, target.getId(), point, cv::FONT_HERSHEY_COMPLEX_SMALL, 0.8, color, 1, CV_AA);
+
 }
