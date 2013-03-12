@@ -6,13 +6,23 @@
 #include <opencv2/imgproc/imgproc.hpp>
 
 #include "FrameProcessor.h"
-#include "Target.h"
+#include "Target_FeatureProjectionTarget.h"
 #include "Algorithm_Sub_Tagging.h"
 
 
 class FeatureProjection : public FrameProcessor {
+public:
+	typedef FeatureProjectionTarget Target;
+	typedef std::vector<Target> Targets;
+	typedef std::pair<size_t,size_t> Match;
+	typedef std::vector<Match> Matches;
+	typedef int Score;
+	typedef std::multimap<Score, Match> MatchingScores;
+
 private:
-	std::vector<Target> _previousTargets;
+	static uint32_t NEXT_ID;
+
+	Targets _previousTargets;
 	Sub_Tagging tagging;
 
 	const int AGE_TRUST = 64;
@@ -32,9 +42,11 @@ public:
 	FeatureProjection();
 	virtual void process(const cv::Mat &in, cv::Mat &out);
 
-	virtual std::multimap<int, std::pair<size_t,size_t> > generateMatchingScores(const std::vector<Target>&) const;
-	virtual std::vector<std::pair<size_t,size_t> > generateMatches(const std::multimap<int, std::pair<size_t,size_t> >&, size_t) const;
+	virtual MatchingScores generateMatchingScores(const Targets&) const;
+	virtual Matches generateMatches(const MatchingScores&, size_t) const;
 	virtual void writeFishCount(cv::Mat&, int);
+
+	static void drawTarget(cv::Mat& out, const Target& target, cv::Scalar color);
 };
 
 #endif // ALGORITHM_FEATUREPROJECTION_H
