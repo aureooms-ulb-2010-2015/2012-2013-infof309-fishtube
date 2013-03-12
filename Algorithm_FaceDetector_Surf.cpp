@@ -27,31 +27,27 @@ void FaceDetector_Surf::process(const cv::Mat &in, cv::Mat &out) {
         // Draw the rectangle in the input image
         cv::rectangle( out, faces.at(i), cv::Scalar(255,0,0), 3, 8, 0);
     }
+
     cv::Point point;
     point.x=20; point.y=20;
-
 
     std::ostringstream faces_;
     faces_ << "Number of Faces : " << faces.size();
 
-
-    //cv::Mat test;
     cv::putText(out, faces_.str(), point, cv::FONT_HERSHEY_COMPLEX_SMALL, 0.8, cv::Scalar(255,0,0), 1, CV_AA);
 
-    try{
+    try {
         if (faces.size()>0){
-           if (recognize(in, faces.at(0))) {
-           cv::Point label;
-           label.x=((faces.at(0)).br()).x+10;
-           label.y=((faces.at(0)).br()).y+10;
-           cv::putText(out, "Simon", label, cv::FONT_HERSHEY_COMPLEX_SMALL, 0.8, cv::Scalar(255,0,0), 1, CV_AA);
-           }
-
+            if (recognize(in, faces.at(0))) {
+                cv::Point label;
+                label.x=((faces.at(0)).br()).x+10;
+                label.y=((faces.at(0)).br()).y+10;
+                cv::putText(out, "Simon", label, cv::FONT_HERSHEY_COMPLEX_SMALL, 0.8, cv::Scalar(255,0,0), 1, CV_AA);
+            }
         }
-    }catch(std::exception e){
-    }
-    return;
+    } catch(std::exception e){}
 
+    return;
 }
 
 
