@@ -66,48 +66,27 @@ bool recognize(const cv::Mat &in, cv::Rect roi) {
     cv::Ptr<cv::FeatureDetector> pfd = new cv::SurfFeatureDetector(10);
     rmatcher.setFeatureDetector(pfd);
 
-    cv::Mat out = in.clone();
     cv::Mat face = in(roi);
 
 
     // Match the two images
     std::vector<cv::DMatch> matches;
     std::vector<cv::KeyPoint> keypoints1, keypoints2;
-    cv::Mat fundemental = rmatcher.match(image1, face ,matches, keypoints1, keypoints2);
+    rmatcher.match(image1, face ,matches, keypoints1, keypoints2);
 
 
     // draw the matches
     cv::Mat imageMatches;
-    cv::drawMatches(image1,keypoints1,  // 1st image and its keypoints
-                    face,keypoints2,  // 2nd image and its keypoints
-                    matches,			// the matches
-                    imageMatches,		// the image produced
-                    cv::Scalar(255,255,255)); // color of the lines
-
-
-    // Convert keypoints into Point2f
-    std::vector<cv::Point2f> points1, points2;
+    cv::drawMatches(image1,keypoints1,          // 1st image and its keypoints
+                    face,keypoints2,            // 2nd image and its keypoints
+                    matches,                    // the matches
+                    imageMatches,               // the image produced
+                    cv::Scalar(255,255,255));   // color of the lines
 
 
     if (rmatcher.getRecognition()){
         result=true;
     }
 
-/*
-    for (std::vector<cv::DMatch>::const_iterator it= matches.begin();
-             it!= matches.end(); ++it) {
-
-             // Get the position of left keypoints
-             float x= keypoints1[it->queryIdx].pt.x;
-             float y= keypoints1[it->queryIdx].pt.y;
-             points1.push_back(cv::Point2f(x,y));
-             cv::circle(image1,cv::Point(x,y),3,cv::Scalar(255,255,255),3);
-             // Get the position of right keypoints
-             x= keypoints2[it->trainIdx].pt.x;
-             y= keypoints2[it->trainIdx].pt.y;
-             cv::circle(out,cv::Point(x,y),3,cv::Scalar(255,255,255),3);
-             points2.push_back(cv::Point2f(x,y));
-    }*/
     return result;
 }
-
