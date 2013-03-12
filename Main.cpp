@@ -10,6 +10,7 @@
 int main(int argc, char *argv[]){
 	//Allows concurrent threads to make Xlib calls.
 	//std::cout << XInitThreads() << std::endl;
+	std::cout << std::endl;
 
 	//résouds les problèmes d'accents
 	QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
