@@ -64,7 +64,8 @@ void FeatureProjection::process(const cv::Mat &in, cv::Mat &out) {
 	size_t j = 0;
 	for(size_t k = 0; k < isMatched_previousTargets.size(); ++k){
 		size_t i = k-j;
-		if(isMatched_previousTargets[i]){
+		if(isMatched_previousTargets[k]){
+			std::cout << "match " << this->_previousTargets.at(i).id << ", " << this->_previousTargets.at(i).age << std::endl;
 			this->_previousTargets.erase(this->_previousTargets.begin()+i);
 			++j;
 		}
@@ -77,8 +78,12 @@ void FeatureProjection::process(const cv::Mat &in, cv::Mat &out) {
 		cv::rectangle(out, this->_previousTargets.at(i).rect, cv::Scalar(90,0,90));
 		this->_previousTargets.at(i).age -= AGE_PENALTY;
 		if(this->_previousTargets.at(i).age <= AGE_DIE){
+			std::cout << "delete " << this->_previousTargets.at(i).id << ", " << this->_previousTargets.at(i).age << std::endl;
 			this->_previousTargets.erase(this->_previousTargets.begin()+i);
 			--i;
+		}
+		else{
+			std::cout << "keep " << this->_previousTargets.at(i).id << ", " << this->_previousTargets.at(i).age << std::endl;
 		}
 	}
 
@@ -147,8 +152,8 @@ FeatureProjection::MatchingScores FeatureProjection::generateMatchingScores(cons
 		for(size_t j = 0; j < newTargets.size(); ++j){
 			int ndelta_h = abs(newTargets.at(j).rect.height - pt.rect.height);
 			int ndelta_w = abs(newTargets.at(j).rect.width - pt.rect.width);
-			int ndelta_x = abs(newTargets.at(j).rect.x - pt.rect.x);
-			int ndelta_y = abs(newTargets.at(j).rect.y - pt.rect.y);
+			int ndelta_x = abs(newTargets.at(j).x[0] - pt.x[0]);
+			int ndelta_y = abs(newTargets.at(j).y[0] - pt.y[0]);
 			if(ndelta_x > MAXDIST || ndelta_y > MAXDIST || ndelta_h > MAXTRANSFORM || ndelta_w > MAXTRANSFORM){
 				continue;
 			}
