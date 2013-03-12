@@ -22,6 +22,7 @@
 #include "Algorithm_Condensation.h"
 #include "Algorithm_CustomCondensationV1.h"
 #include "Algorithm_FaceDetector_Surf.h"
+#include "Algorithm_FeatureProjection.h"
 
 //===================================================
 // Le seul code auquel il faut toucher pour rajouter des algos à pouvoir exécuter, attention à respecter l'ordre!!
@@ -62,6 +63,8 @@ FrameProcessor* MainWindow::generateProcessor(int index){
 		return new BinaryMaskWithOriginalFrame();
 	case 16:
 		return new CustomCondensationV1();
+	case 17:
+		return new FeatureProjection();
         //...
 
     }
@@ -88,6 +91,7 @@ void MainWindow::initProcessingChoices(){
 	this->_processingChoice->addItem("Face detection with surf");
 	this->_processingChoice->addItem("Binary Mask (original frame included)");
 	this->_processingChoice->addItem("CustomCondensationV1");
+	this->_processingChoice->addItem("FeatureProjection");
     //...
 }
 

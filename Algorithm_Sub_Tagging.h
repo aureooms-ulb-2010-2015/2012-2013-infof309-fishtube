@@ -26,9 +26,13 @@ private:
 	int threshold;			// threshold for foreground extraction
 	double learningRate;    // learning rate in background accumulation
 
+	cv::Size blurRange;
+
 public:
 
-	Sub_Tagging() : threshold(10), learningRate(0.1){}
+	Sub_Tagging() : threshold(10), learningRate(0.1), blurRange(6,6){}
+	Sub_Tagging(int threshold, double learningRate, cv::Size blurRange):
+		threshold(threshold), learningRate(learningRate), blurRange(blurRange){}
 
 	// Set the threshold used to declare a foreground
 	void setThreshold(int t) {
@@ -44,7 +48,7 @@ public:
 	Rects process(const cv::Mat &in) {
 		// convert input frame to gray-level image and blur it
 		cv::cvtColor(in, _gray, CV_BGR2GRAY);
-		cv::blur( _gray, _gray, cv::Size(6,6) );
+		cv::blur( _gray, _gray, blurRange );
 
 		// initialize background to 1st frame
 		if (_background.empty()){

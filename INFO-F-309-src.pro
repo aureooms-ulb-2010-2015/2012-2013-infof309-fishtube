@@ -53,7 +53,8 @@ SOURCES += \
     Algorithm_FaceDetector_Surf.cpp \
     Algorithm_BinaryMaskWithOriginalFrame.cpp \
     Matcher_TargetMatcherV1.cpp \
-    Algorithm_CustomCondensationV1.cpp
+    Algorithm_CustomCondensationV1.cpp \
+    Algorithm_FeatureProjection.cpp
 
 
 HEADERS += \
@@ -110,7 +111,8 @@ HEADERS += \
     DiscreteDistribution.h \
     Target_CondensationTargetV1.h \
     Target_CondensationTarget.h \
-    Algorithm_Sub_Tagging.h
+    Algorithm_Sub_Tagging.h \
+    Algorithm_FeatureProjection.h
 
 RESOURCES += img.qrc
 

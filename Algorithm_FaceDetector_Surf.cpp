@@ -3,9 +3,11 @@
 #include <opencv2/objdetect/objdetect.hpp>
 #include <string>
 #include <ostream>
+#include <iostream>
 
 FaceDetector_Surf::FaceDetector_Surf() {
-    this->_classifier.load("haarcascade_frontalface_default.xml");
+	std::string filename = "haarcascade_frontalface_default.xml";
+	if (!this->_classifier.load(filename)) std::cout << "can't load file : " << filename << std::endl;
 }
 
 
