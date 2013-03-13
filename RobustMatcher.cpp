@@ -114,7 +114,7 @@ cv::Mat RobustMatcher::ransacTest(const std::vector<cv::DMatch>& matches,
 
     std::cout << "Number of matched points (after cleaning): " << outMatches.size() << std::endl;
     if (outMatches.size()>13){
-        std::cout << "true";
+        //std::cout << "true";
         this->_reconized = true;
 	}
 
