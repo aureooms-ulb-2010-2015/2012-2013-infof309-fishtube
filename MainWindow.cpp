@@ -217,7 +217,7 @@ void MainWindow::sourceReady(){
 	this->_streamProcessor->reset(this->_streamReader, this->_frameProcessor);
 	this->_streamInfo = this->_streamReader->getSourceInfo();
 	int totalTime = 0, elapsedTime = 0;
-	this->_displayer->setFrameLength((this->_streamInfo.getFps() == -1)? 40 : 1000/this->_streamInfo.getFps());
+    this->_displayer->setFrameLength((this->_streamInfo.getFps() <= 0)? 40 : 1000/this->_streamInfo.getFps());
 
 	if(this->_streamInfo.isOpen()){
 		if(this->_streamInfo.getFps() > 0 && this->_streamInfo.getNumberOfFrames() > 0 && this->_streamInfo.getActualFrameNumber() >= 0){
