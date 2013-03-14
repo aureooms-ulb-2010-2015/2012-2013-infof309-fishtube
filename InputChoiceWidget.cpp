@@ -4,6 +4,8 @@
 #include <QListView>
 #include <QStyledItemDelegate>
 
+// add per url http://192.168.2.29/video.cgi?resolution=640x480&req_fps=10&.mjpg
+
 InputChoiceWidget::InputChoiceWidget():_lastVisitedFolder(QDir::homePath()){
 	this->addItem("Choisir la source");
 	this->addItem("Ouvrir un fichier");
