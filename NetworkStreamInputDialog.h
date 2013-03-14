@@ -40,7 +40,7 @@ private:
 
 
 public:
-    explicit NetworkStreamInputDialog(QWidget *parent = 0);
+	explicit NetworkStreamInputDialog(QWidget *parent = 0);
 
 	virtual QString getResult();
 	virtual void accept();

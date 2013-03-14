@@ -13,10 +13,13 @@ NetworkStreamInputDialog::NetworkStreamInputDialog(QWidget *parent) :
 	this->_layout->addWidget(this->_confirmButton,6,1,1,1);
 	this->_layout->addWidget(this->_cancelButton,6,2,1,1);
 
+	this->_resolution->addItem("320x240");
 	this->_resolution->addItem("640x480");
+	this->_resolution->setCurrentIndex(1);
 	this->_fps->addItem("10");
 	this->_fps->addItem("25");
 	this->_fps->addItem("30");
+	this->_fps->setCurrentIndex(2);
 	this->_format->addItem(".mjpg");
 
 	this->_firstLineLayout->addWidget(this->_protocol);
@@ -28,6 +31,7 @@ NetworkStreamInputDialog::NetworkStreamInputDialog(QWidget *parent) :
 	this->_firstLineLayout->addWidget(this->_ressource);
 
 	this->_protocol->addItem("http");
+	this->_protocol->addItem("rtsp");
 
 	this->_hostname->setPlaceholderText("Adresse IP");
 	this->_port->setPlaceholderText("Port (par défaut)");
