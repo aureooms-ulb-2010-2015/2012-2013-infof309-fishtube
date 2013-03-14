@@ -54,7 +54,10 @@ SOURCES += \
     Algorithm_BinaryMaskWithOriginalFrame.cpp \
     Matcher_TargetMatcherV1.cpp \
     Algorithm_CustomCondensationV1.cpp \
-    Algorithm_FeatureProjection.cpp
+    Algorithm_FeatureProjection.cpp \
+    networkstreaminputdialog.cpp \
+    CustomTextInput.cpp \
+    CustomComboBox.cpp
 
 
 HEADERS += \
@@ -113,7 +116,10 @@ HEADERS += \
     Target_CondensationTarget.h \
     Algorithm_Sub_Tagging.h \
     Algorithm_FeatureProjection.h \
-    Target_FeatureProjectionTarget.h
+    Target_FeatureProjectionTarget.h \
+    networkstreaminputdialog.h \
+    CustomTextInput.h \
+    CustomComboBox.h
 
 RESOURCES += img.qrc
 

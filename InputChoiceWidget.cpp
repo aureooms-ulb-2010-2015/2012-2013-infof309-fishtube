@@ -3,12 +3,14 @@
 #include "VideoCaptureDeviceDetectorForLinux.h"
 #include <QListView>
 #include <QStyledItemDelegate>
+#include "networkstreaminputdialog.h"
 
 // add per url http://192.168.2.29/video.cgi?resolution=640x480&req_fps=10&.mjpg
 
 InputChoiceWidget::InputChoiceWidget():_lastVisitedFolder(QDir::homePath()){
-	this->addItem("Choisir la source");
-	this->addItem("Ouvrir un fichier");
+    this->addItem("Choisir la source");
+    this->addItem("Ouvrir un fichier");
+    this->addItem("Se connecter à une caméra réseau");
 
 	QFile file2(":/qss/QComboBox.qss");
 	file2.open(QFile::ReadOnly);
@@ -37,14 +39,20 @@ void InputChoiceWidget::showPopup(){
 }
 
 void InputChoiceWidget::refreshDevices(){
-	while(this->count() > 2){
-		this->removeItem(2);
+    while(this->count() > VIDEO_STREAM_BEGIN){
+        this->removeItem(VIDEO_STREAM_BEGIN);
 	}
 	VideoCaptureDeviceDetectorForLinux dtc = VideoCaptureDeviceDetectorForLinux();
 	QList<VideoCaptureDeviceInfo> infoList = dtc.getCaptureDevicesInfo();
 	for(int i = 0; i < infoList.size(); ++i){
 		this->addItem(infoList.at(i).name);
-	}
+    }
+}
+
+void InputChoiceWidget::chooseNetworkStream(){
+    NetworkStreamInputDialog* dialog = new NetworkStreamInputDialog(this);
+    dialog->exec();
+    this->setCurrentIndex(0);
 }
 
 void InputChoiceWidget::currentIndexChangedSLOT( int index ){
@@ -56,9 +64,12 @@ void InputChoiceWidget::currentIndexChangedSLOT( int index ){
 		}
 		this->setCurrentIndex(0);
 	}
-	else if(index >= 2){
+    if(index == 2){
+        this->chooseNetworkStream();
+    }
+    else if(index >= VIDEO_STREAM_BEGIN){
 		this->setItemText(0,this->currentText());
-		emit currentSourceChanged(index-2);
+        emit currentSourceChanged(index-VIDEO_STREAM_BEGIN);
 		this->setCurrentIndex(0);
 	}
 }
