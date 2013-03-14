@@ -20,6 +20,7 @@ public:
 	typedef int Score;
 	typedef std::pair<Score, Match> MatchingScore;
 	typedef std::multimap<Score, Match> MatchingScores;
+	typedef Target::Feature Feature;
 
 private:
 	uint32_t NEXT_ID = ~0;

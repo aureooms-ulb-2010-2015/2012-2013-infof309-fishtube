@@ -90,11 +90,12 @@ void FeatureProjection::process(const cv::Mat &in, cv::Mat &out) {
 	//PROJECTION FOR MISSING TARGETS
 
 	for(Target& target : this->_previousTargets){
-		int delta_x = target.x[D-1];
-		int delta_y = target.y[D-1];
-		for(size_t l = D - 1; l > 0; --l){
-			int temp_x = target.x[l-1];
-			int temp_y = target.y[l-1];
+		size_t begin = 1;
+		Feature delta_x = target.x[begin];
+		Feature delta_y = target.y[begin];
+		for(size_t l = begin; l > 0; --l){
+			Feature temp_x = target.x[l-1];
+			Feature temp_y = target.y[l-1];
 			target.x[l-1] += delta_x;
 			target.y[l-1] += delta_y;
 			delta_x = temp_x + delta_x/2;
@@ -102,8 +103,8 @@ void FeatureProjection::process(const cv::Mat &in, cv::Mat &out) {
 		}
 
 		cv::Rect previous = target.rect;
-		int x = target.x[0] - previous.width/2;
-		int y = target.y[0] - previous.height/2;
+		Feature x = target.x[0] - previous.width/2;
+		Feature y = target.y[0] - previous.height/2;
 		target.rect = cv::Rect(x,y,previous.width,previous.height);
 
 		drawTarget(out, target, cv::Scalar(122, 0, 0));
@@ -111,8 +112,8 @@ void FeatureProjection::process(const cv::Mat &in, cv::Mat &out) {
 
 	//FUTURE FOR NEW TARGETS
 	for(const Target& target : newTargets){
-		int x = target.x[D-1];
-		int y = target.y[D-1];
+		Feature x = target.x[D-1];
+		Feature y = target.y[D-1];
 		for(size_t l = D - 1; l > 0; --l){
 			x = target.x[l-1] + x/2;
 			y = target.y[l-1] + y/2;

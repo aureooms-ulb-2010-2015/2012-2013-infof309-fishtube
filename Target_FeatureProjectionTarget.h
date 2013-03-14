@@ -7,9 +7,11 @@
 template<size_t D> class FeatureProjectionTarget{
 
 public:
+	typedef double Feature;
+
 	std::string id;
-	int x[D];
-	int y[D];
+	Feature x[D];
+	Feature y[D];
 	cv::Rect rect;
 	int age;
 
