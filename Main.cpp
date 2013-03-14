@@ -1,4 +1,4 @@
-#include "FishTubeMainWindow.h"
+#include "MainWindow.h"
 #include <QApplication>
 #include <dialog.h>
 #include <X11/Xlib.h>
@@ -17,7 +17,7 @@ int main(int argc, char *argv[]){
     QApplication a(argc, argv);
 	a.setOrganizationName("ULB");
     a.setApplicationName("FishTube");
-	FishTubeMainWindow w;
+	MainWindow w;
     w.show();
     return a.exec();
 }
