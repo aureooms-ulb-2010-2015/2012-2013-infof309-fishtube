@@ -58,7 +58,8 @@ SOURCES += \
     CustomTextInput.cpp \
     CustomComboBox.cpp \
     NetworkStreamInputDialog.cpp \
-    CustomButton.cpp
+    CustomButton.cpp \
+    FishTubeMainWindow.cpp
 
 
 HEADERS += \
@@ -121,7 +122,8 @@ HEADERS += \
     CustomTextInput.h \
     CustomComboBox.h \
     NetworkStreamInputDialog.h \
-    CustomButton.h
+    CustomButton.h \
+    FishTubeMainWindow.h
 
 RESOURCES += img.qrc
 
