@@ -7,7 +7,7 @@
 
 #include "Algorithm_CustomCondensation.h"
 
-#include "Matcher_TargetMatcherV1.h"
+#include "Matcher_TargetMatcherV2_BinaryMask.h"
 #include "Target_CondensationTargetV1.h"
 
 #include <chrono>
@@ -15,7 +15,7 @@
 #include <random>
 #include "Algorithm_Sub_Tagging.h"
 
-class CustomCondensationV1: public CustomCondensation<TargetMatcherV1>{
+class CustomCondensationV1: public CustomCondensation<TargetMatcherV2_BinaryMask>{
 
 public:
 
@@ -24,7 +24,7 @@ public:
 	typedef std::vector<Point> Points;
 	typedef cv::Rect Rect;
 	typedef std::vector<Rect> Rects;
-	typedef TargetMatcherV1::Target Target;
+	typedef TargetMatcherV2_BinaryMask::Target Target;
 	typedef Target::Density Density;
 	typedef Target::Densities Densities;
 	typedef std::vector<Target> Targets;

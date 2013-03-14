@@ -58,7 +58,8 @@ SOURCES += \
     CustomTextInput.cpp \
     CustomComboBox.cpp \
     NetworkStreamInputDialog.cpp \
-    CustomButton.cpp
+    CustomButton.cpp \
+    Matcher_TargetMatcherV2_BinaryMask.cpp
 
 
 HEADERS += \
@@ -121,7 +122,8 @@ HEADERS += \
     CustomTextInput.h \
     CustomComboBox.h \
     NetworkStreamInputDialog.h \
-    CustomButton.h
+    CustomButton.h \
+    Matcher_TargetMatcherV2_BinaryMask.h
 
 RESOURCES += img.qrc
 
