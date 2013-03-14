@@ -3,7 +3,7 @@
 #include "VideoCaptureDeviceDetectorForLinux.h"
 #include <QListView>
 #include <QStyledItemDelegate>
-#include "networkstreaminputdialog.h"
+#include "NetworkStreamInputDialog.h"
 
 // add per url http://192.168.2.29/video.cgi?resolution=640x480&req_fps=10&.mjpg
 
@@ -51,7 +51,11 @@ void InputChoiceWidget::refreshDevices(){
 
 void InputChoiceWidget::chooseNetworkStream(){
     NetworkStreamInputDialog* dialog = new NetworkStreamInputDialog(this);
-    dialog->exec();
+	if (dialog->exec() == QDialog::Accepted) {
+		QString url = dialog->getResult();
+		this->setItemText(0,url);
+		emit currentSourceChanged(url);
+	}
     this->setCurrentIndex(0);
 }
 

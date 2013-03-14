@@ -55,9 +55,10 @@ SOURCES += \
     Matcher_TargetMatcherV1.cpp \
     Algorithm_CustomCondensationV1.cpp \
     Algorithm_FeatureProjection.cpp \
-    networkstreaminputdialog.cpp \
     CustomTextInput.cpp \
-    CustomComboBox.cpp
+    CustomComboBox.cpp \
+    NetworkStreamInputDialog.cpp \
+    CustomButton.cpp
 
 
 HEADERS += \
@@ -117,9 +118,10 @@ HEADERS += \
     Algorithm_Sub_Tagging.h \
     Algorithm_FeatureProjection.h \
     Target_FeatureProjectionTarget.h \
-    networkstreaminputdialog.h \
     CustomTextInput.h \
-    CustomComboBox.h
+    CustomComboBox.h \
+    NetworkStreamInputDialog.h \
+    CustomButton.h
 
 RESOURCES += img.qrc
 

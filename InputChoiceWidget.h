@@ -6,7 +6,7 @@
 class InputChoiceWidget : public QComboBox{
 	Q_OBJECT
 private:
-    const size_t VIDEO_STREAM_BEGIN = 3;
+	const int VIDEO_STREAM_BEGIN = 3;
 	QString _lastVisitedFolder;
     virtual void chooseNetworkStream();
 
