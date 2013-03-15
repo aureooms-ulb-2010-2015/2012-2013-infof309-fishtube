@@ -17,7 +17,7 @@ TEMPLATE = app
 
 CONFIG += link_pkgconfig
 PKGCONFIG += opencv
-LIBS += -lv4l2 -lX11 -llib309
+LIBS += -lv4l2 -lX11 #-llib309
 #LIBS += -lwavelet2d -Lwavelet2s
 
 INCLUDEPATH += /usr/local/lib/
