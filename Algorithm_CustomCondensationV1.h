@@ -56,6 +56,8 @@ private:
 	size_t generatingRange = 1;
 	int spreadRange = 20;
 	int minScore = 50;
+	int TARGET_MIN_WIDTH = 1; //should be at least 1 px and correspond to rect generator (eg tagging) results for no crash
+	int TARGET_MIN_HEIGHT = 1;
 	Densities density;
 	Sub_Tagging tagging;
 

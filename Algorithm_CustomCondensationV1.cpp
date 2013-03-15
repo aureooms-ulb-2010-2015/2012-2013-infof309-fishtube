@@ -63,11 +63,11 @@ CustomCondensationV1::Rects CustomCondensationV1::generateRects(const cv::Mat &i
 	for(size_t i = 0; i < pollingRange; ++i){
 		int x = distributions.x(generator);
 		int y = distributions.y(generator);
-		int w = distributions.w(generator);
+		int w = distributions.w(generator) + 1;
 		if (w > (in.cols - x)){
 			w = in.cols - x;
 		}
-		int h = distributions.h(generator);
+		int h = distributions.h(generator) + 1; //+1 is for [1,2,3,..,n] instead of [0,1,2,...,n-1]
 		if (h > (in.rows - y)){
 			h = in.rows - y;
 		}
@@ -84,8 +84,8 @@ void CustomCondensationV1::initDensity(const cv::Mat& in){
 	density.w.clear();
 	density.h.clear();
 
-	density.x.resize(in.cols, 0);
-	density.y.resize(in.rows, 0);
+	density.x.resize(in.cols - TARGET_MIN_WIDTH, 0);
+	density.y.resize(in.rows - TARGET_MIN_HEIGHT, 0);
 	density.w.resize(in.cols, 0);
 	density.h.resize(in.rows, 0);
 }
