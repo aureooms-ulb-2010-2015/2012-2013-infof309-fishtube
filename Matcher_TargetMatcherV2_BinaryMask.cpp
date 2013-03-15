@@ -32,5 +32,5 @@ int TargetMatcherV2_BinaryMask::computeScore(const Target::Data &a, const Target
 	}
 
 	//std::cout << c << std::endl;
-	return score;
+	return score + 1000000;
 }
