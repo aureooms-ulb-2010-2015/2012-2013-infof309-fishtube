@@ -52,7 +52,7 @@ private:
 	Generator generator = Generator(Clock::now().time_since_epoch().count());
 	Target::Data model = cv::imread("data/bigfish.png");//("simo.png");
 	Targets currentlyTracked;
-	size_t pollingRange = 10;
+	size_t pollingRange = 50;
 	size_t generatingRange = 1;
 	int spreadRange = 20;
 	int minScore = 50;

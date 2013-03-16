@@ -128,7 +128,7 @@ void CustomCondensationV1::ConDensAte(const cv::Mat &in, cv::Mat &out, Target& t
 
 	for(Rect rect : rects){
 
-		int score = matcher.computeScore(in(rect), target.picture);
+		int score = matcher.computeScore(in(rect), model);//target.picture);
 		density.x[rect.x] += score;
 		density.y[rect.y] += score;
 		density.w[rect.width] += score;

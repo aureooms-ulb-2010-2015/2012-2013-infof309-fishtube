@@ -10,5 +10,6 @@
         <file>xml/haarcascade_frontalface_default.xml</file>
         <file>xml/lpbcascade_frontalface.xml</file>
         <file>xml/haarcascade_eye_tree_eyeglasses.xml</file>
+        <file>qss/CustomButton.qss</file>
     </qresource>
 </RCC>
