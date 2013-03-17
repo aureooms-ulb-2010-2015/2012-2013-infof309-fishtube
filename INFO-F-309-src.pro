@@ -53,7 +53,6 @@ SOURCES += \
     Algorithm_FaceDetector_Surf.cpp \
     Algorithm_BinaryMaskWithOriginalFrame.cpp \
     Matcher_TargetMatcherV1.cpp \
-    Algorithm_CustomCondensationV1.cpp \
     Algorithm_FeatureProjection.cpp \
     CustomTextInput.cpp \
     CustomComboBox.cpp \
@@ -123,7 +122,8 @@ HEADERS += \
     CustomComboBox.h \
     NetworkStreamInputDialog.h \
     CustomButton.h \
-    Matcher_TargetMatcherV2_BinaryMask.h
+    Matcher_TargetMatcherV2_BinaryMask.h \
+    Algorithm_CustomCondensationTemplateV1.h
 
 RESOURCES += img.qrc
 
