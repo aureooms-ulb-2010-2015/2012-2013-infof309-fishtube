@@ -17,113 +17,18 @@ TEMPLATE = app
 
 CONFIG += link_pkgconfig
 PKGCONFIG += opencv
-LIBS += -lv4l2 -lX11 #-llib309
+LIBS += -lv4l2 -lX11 -L ../ -llib309
 #LIBS += -lwavelet2d -Lwavelet2s
 
-INCLUDEPATH += /usr/local/lib/
+INCLUDEPATH += /usr/local/lib/ ../lib309
 
 SOURCES += \
-    Mat2QImage.cpp \
-    ImageDisplayerWidgetImpl.cpp \
-    TimeDisplayerWidget.cpp \
-    SwaperWidget.cpp \
-    PlayPauseButtonWidget.cpp \
-    InputChoiceWidget.cpp \
-    TimeControlWidget.cpp \
-    VideoPlayControlsWidget.cpp \
-    ImageDisplayerWidgetImpl2.cpp \
-    OpenCV_GLWidget.cpp \
-    GLWidgetRenderingThread.cpp \
-    ImageDisplayerWidgetImpl3.cpp \
-    OpenCV_SynchronizedGLWidget.cpp \
-    VideoStreamProcessor.cpp \
-    ProcessingChoiceWidget.cpp \
-    ZZZ_Example_processHandler.cpp \
-    Algorithm_OomsAlgorithmTest.cpp \
     Main.cpp \
-    MainWindow.cpp \
-    Algorithm_NoProcessing.cpp \
-    Algorithm_ColorDetection.cpp \
-    Target.cpp \
-    Algorithm_FaceDetector.cpp \
-    Algorithm_EyeFaceDetector.cpp \
-    Algorithm_OomsChallenge.cpp \
-    RobustMatcher.cpp \
-    Algorithm_Condensation.cpp \
-    Algorithm_FaceDetector_Surf.cpp \
-    Algorithm_BinaryMaskWithOriginalFrame.cpp \
-    Matcher_TargetMatcherV1.cpp \
-    Algorithm_FeatureProjection.cpp \
-    CustomTextInput.cpp \
-    CustomComboBox.cpp \
-    NetworkStreamInputDialog.cpp \
-    CustomButton.cpp \
-    Matcher_TargetMatcherV2_BinaryMask.cpp
+    MainWindow.cpp
 
 
 HEADERS += \
-    Stream.h\
-    StreamDisplayer.h \
-    Mat2QImage.h \
-    Clock.h \
-    ImageDisplayerWidget.h \
-    ImageDisplayerWidgetImpl.h \
-    TimeDisplayerWidget.h \
-    SwaperWidget.h \
-    PlayPauseButtonWidget.h \
-    InputChoiceWidget.h \
-    VideoCaptureDeviceDetector.h \
-    VideoCaptureDeviceDetectorForLinux.h \
-    TimeControlWidget.h \
-    VideoPlayControlsWidget.h \
-    FrameProcessor.h \
-    ImageDisplayerWidgetImpl2.h \
-    OpenCV_GLWidget.h \
-    GLWidgetRenderingThread.h \
-    ImageDisplayerWidgetImpl3.h \
-    OpenCV_SynchronizedGLWidget.h \
-    VideoStreamInfo.h \
-    ZZZ_Example_VideoStreamProcessor.h \
-    VideoStreamReader.h \
-    VideoStreamProcessor.h \
-    ProcessingChoiceWidget.h \
-    Algorithm_Tagging.h \
-    Algorithm_OomsAlgorithmTest.h \
-    MainWindow.h \
-    Algorithm_Watershed.h \
-    Algorithm_Sub_BinaryMask.h \
-    Algorithm_MeanShift.h \
-    Algorithm_FeaturesTracker.h \
-    Algorithm_TagAnTrack.h \
-    Algorithm_FeaturesTracker.h \
-    Algorithm_Sub_BinaryMask.h \
-    Algorithm_MeanShift.h \
-    Algorithm_NoProcessing.h \
-    Algorithm_ColorDetection.h \
-    Target.h \
-    Algorithm_FaceDetector.h \
-    Algorithm_EyeFaceDetector.h \
-    Algorithm_OomsChallenge.h \
-    RobustMatcher.h \
-    Algorithm_Condensation.h \
-    Algorithm_FaceDetector_Surf.h \
-    Algorithm_BinaryMaskWithOriginalFrame.h \
-    Matcher_TargetMatcherV1.h \
-    Matcher_TargetMatcher.h \
-    Algorithm_CustomCondensation.h \
-    Algorithm_CustomCondensationV1.h \
-    DiscreteDistribution.h \
-    Target_CondensationTargetV1.h \
-    Target_CondensationTarget.h \
-    Algorithm_Sub_Tagging.h \
-    Algorithm_FeatureProjection.h \
-    Target_FeatureProjectionTarget.h \
-    CustomTextInput.h \
-    CustomComboBox.h \
-    NetworkStreamInputDialog.h \
-    CustomButton.h \
-    Matcher_TargetMatcherV2_BinaryMask.h \
-    Algorithm_CustomCondensationTemplateV1.h
+    MainWindow.h
 
 RESOURCES += img.qrc
 

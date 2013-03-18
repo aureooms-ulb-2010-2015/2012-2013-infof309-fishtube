@@ -1,6 +1,5 @@
 #include "MainWindow.h"
 #include <QApplication>
-#include <dialog.h>
 #include <X11/Xlib.h>
 #include <iostream>
 #include <QTextCodec>

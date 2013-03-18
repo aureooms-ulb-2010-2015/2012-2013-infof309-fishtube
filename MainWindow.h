@@ -24,7 +24,7 @@ private:
 
 	VideoStreamInfo _streamInfo;
 
-	QWidget* _wraper;
+    QWidget* _wraper;
 	QGridLayout* _layout;
 
 	VideoStreamReader* _streamReader;
