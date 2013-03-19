@@ -15,7 +15,6 @@
 #include "Algorithm_BinaryMaskWithOriginalFrame.h"
 #include "Algorithm_Watershed.h"
 #include "Algorithm_MeanShift.h"
-#include "Algorithm_ColorDetection.h"
 #include "Algorithm_FaceDetector.h"
 #include "Algorithm_EyeFaceDetector.h"
 #include "Algorithm_OomsChallenge.h"
@@ -38,32 +37,28 @@ FrameProcessor* MainWindow::generateProcessor(int index){
     case 3:
 		return new OomsAlgorithmTest(0.05,5);
     case 4:
-		return new ColorDetection();
+        return new EyeFaceDetector();
     case 5:
-		return new FaceDetector();
-    case 6:
-		return new EyeFaceDetector();
-    case 7:
 		return new OomsChallenge();
-    case 8:
+    case 6:
 		return new FeatureTracker();
-    case 9:
+    case 7:
 		return new TagNTrack();
-    case 10:
+    case 8:
 		return new Sub_BinaryMask();
-    case 11:
+    case 9:
 		return new Watershed();
-	case 12:
+    case 10:
 		return new MeanShift();
-	case 13:
+    case 11:
 		return new Condensation();
-    case 14:
+    case 12:
 		return new FaceDetector_Surf();
-	case 15:
+    case 13:
 		return new BinaryMaskWithOriginalFrame();
-	case 16:
+    case 14:
 		return new CustomCondensationV1();
-	case 17:
+    case 15:
 		return new FeatureProjection();
         //...
 
@@ -78,8 +73,6 @@ void MainWindow::initProcessingChoices(){
     this->_processingChoice->addItem("Tagging");
     this->_processingChoice->addItem("OomsAlgorithmTest (default)");
     this->_processingChoice->addItem("OomsAlgorithmTest (0.05,5)");
-    this->_processingChoice->addItem("Color detection");
-    this->_processingChoice->addItem("Face detection");
     this->_processingChoice->addItem("Face and eye detector");
     this->_processingChoice->addItem("Ooms Challenge");
     this->_processingChoice->addItem("FeatureTracker");
