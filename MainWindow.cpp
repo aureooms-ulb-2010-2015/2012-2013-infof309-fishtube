@@ -23,6 +23,7 @@
 #include "Algorithm_CustomCondensationV1.h"
 #include "Algorithm_FaceDetector_Surf.h"
 #include "Algorithm_FeatureProjection.h"
+#include "Algorithm_TaggingB.h"
 
 //===================================================
 // Le seul code auquel il faut toucher pour rajouter des algos à pouvoir exécuter, attention à respecter l'ordre!!
@@ -65,6 +66,8 @@ FrameProcessor* MainWindow::generateProcessor(int index){
 		return new CustomCondensationV1();
 	case 17:
 		return new FeatureProjection();
+    case 18:
+        return new TaggingB();
         //...
 
     }
@@ -92,6 +95,7 @@ void MainWindow::initProcessingChoices(){
 	this->_processingChoice->addItem("Binary Mask (original frame included)");
 	this->_processingChoice->addItem("CustomCondensationV1");
 	this->_processingChoice->addItem("FeatureProjection");
+    this->_processingChoice->addItem("Tagging B merger");
     //...
 }
 
