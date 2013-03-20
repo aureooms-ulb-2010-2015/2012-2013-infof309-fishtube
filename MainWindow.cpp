@@ -191,6 +191,8 @@ void MainWindow::keyPressEvent(QKeyEvent* event){
 }
 
 void MainWindow::requestChangeSourceSLOT(int device){
+	lastDevice = device;
+	whichLast = 0;
 	this->_displayer->pause();
 	this->_streamProcessor->stop();
 	this->_streamReader->open(device);
@@ -198,6 +200,8 @@ void MainWindow::requestChangeSourceSLOT(int device){
 }
 
 void MainWindow::requestChangeSourceSLOT(QString filename){
+	lastPath = filename;
+	whichLast = 1;
 	this->_displayer->pause();
 	this->_streamProcessor->stop();
 	this->_streamReader->open(filename);
@@ -233,6 +237,14 @@ void MainWindow::posChangedSLOT(int pos){
 		elapsedTime = pos/this->_streamInfo.getFps();
 	}
 	this->_videoControls->setElapsedTime(elapsedTime);
+	if(pos == this->_streamInfo.getNumberOfFrames() - 1){
+		if(whichLast == 0){
+			this->requestChangeSourceSLOT(lastDevice);
+		}
+		else{
+			this->requestChangeSourceSLOT(lastPath);
+		}
+	}
 }
 
 void MainWindow::timeChangedSLOT(int time){

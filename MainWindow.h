@@ -43,6 +43,10 @@ private:
 	FrameProcessor* generateProcessor(int);
 	void initProcessingChoices();
 	void centerWindow();
+
+	int lastDevice;
+	QString lastPath;
+	int whichLast;
     
 public:
     explicit MainWindow(QWidget *parent = 0);
