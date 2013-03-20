@@ -43,10 +43,12 @@ private:
 	FrameProcessor* generateProcessor(int);
 	void initProcessingChoices();
 	void centerWindow();
+	void reloadStream();
+	void playPauseToggle();
 
 	int lastDevice;
 	QString lastPath;
-	int whichLast;
+	int whichLast = -1;
     
 public:
     explicit MainWindow(QWidget *parent = 0);

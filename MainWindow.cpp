@@ -191,6 +191,14 @@ void MainWindow::keyPressEvent(QKeyEvent* event){
 		return QCoreApplication::quit();
 	}
 
+	else if(event->key() == Qt::Key_F5){
+		return reloadStream();
+	}
+
+	else if(event->key() == Qt::Key_F1){
+		return this->playPauseToggle();
+	}
+
 	return QWidget::keyPressEvent(event);
 }
 
@@ -234,6 +242,28 @@ void MainWindow::sourceReady(){
 	this->_videoControls->setPlaying();
 }
 
+void MainWindow::reloadStream(){
+	if(whichLast == -1) return;
+	if(whichLast == 0){
+		this->requestChangeSourceSLOT(lastDevice);
+	}
+	else{
+		this->requestChangeSourceSLOT(lastPath);
+	}
+}
+
+void MainWindow::playPauseToggle(){
+	bool wasPlaying = this->_videoControls->isPlaying();
+	if(wasPlaying){
+		this->_displayer->pause();
+		this->_videoControls->setPaused();
+	}
+	else{
+		this->_displayer->play();
+		this->_videoControls->setPlaying();
+	}
+}
+
 
 void MainWindow::posChangedSLOT(int pos){
 	int elapsedTime = 0;
@@ -242,12 +272,7 @@ void MainWindow::posChangedSLOT(int pos){
 	}
 	this->_videoControls->setElapsedTime(elapsedTime);
 	if(pos == this->_streamInfo.getNumberOfFrames() - 1){
-		if(whichLast == 0){
-			this->requestChangeSourceSLOT(lastDevice);
-		}
-		else{
-			this->requestChangeSourceSLOT(lastPath);
-		}
+		reloadStream();
 	}
 }
 
