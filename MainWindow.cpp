@@ -61,7 +61,7 @@ FrameProcessor* MainWindow::generateProcessor(int index){
 		return new CustomCondensationV1();
     case 15:
 		return new FeatureProjection();
-    case 18:
+	case 16:
         return new TaggingB();
         //...
 
