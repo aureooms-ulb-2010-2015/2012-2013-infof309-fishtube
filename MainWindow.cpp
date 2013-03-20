@@ -185,9 +185,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event){
 			return this->requestExitFullScreenSLOT();
 		}
 	}
-	//DOESNT WORK, DUNNO Y
-	else if((event->key() == Qt::Key_F4 && QApplication::keyboardModifiers() == Qt::AltModifier)
-			|| (event->key() == Qt::Key_W && QApplication::keyboardModifiers() == Qt::ControlModifier)){
+	else if(event->key() == Qt::Key_F4 && QApplication::keyboardModifiers() == Qt::AltModifier){
 		return QCoreApplication::quit();
 	}
 
