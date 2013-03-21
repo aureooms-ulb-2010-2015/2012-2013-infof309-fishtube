@@ -92,12 +92,9 @@ void MainWindow::initProcessingChoices(){
 
 
 
-MainWindow::MainWindow(QWidget *parent) :
-	BasicWindow(parent){
+MainWindow::MainWindow(QWidget *parent) : BasicWindow(parent){
     this->setWindowTitle("FishTube");
 
-	//--------------------------------------------------------------------
-	this->_processingChoice = new ProcessingChoiceWidget();
 	this->initProcessingChoices();
 
 	QHBoxLayout* upperBarLayout = new QHBoxLayout(this->_upperBar);

@@ -1,19 +1,17 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "ProcessingChoiceWidget.h"
 #include "BasicWindow.h"
+#include "ProcessingChoiceWidget.h"
 
 class MainWindow : public BasicWindow{
     Q_OBJECT
 
 private:
-
-	ProcessingChoiceWidget* _processingChoice;
+	ProcessingChoiceWidget* _processingChoice = new ProcessingChoiceWidget();
 	int _frameProcessorId = 0;
 
 	void initProcessingChoices();
-
 	virtual FrameProcessor* generateProcessor();
 
 public:
