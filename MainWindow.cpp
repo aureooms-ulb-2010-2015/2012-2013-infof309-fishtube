@@ -1,5 +1,6 @@
 #include "MainWindow.h"
-
+#include <QApplication>
+#include <QKeyEvent>
 #include "Algorithm_NoProcessing.h"
 #include "Algorithm_Tagging.h"
 #include "Algorithm_OomsAlgorithmTest.h"
@@ -108,7 +109,11 @@ MainWindow::MainWindow(QWidget *parent) : BasicWindow(parent){
 MainWindow::~MainWindow(){}
 
 void MainWindow::keyPressEvent(QKeyEvent* event){
-	//TODO ADD SHORTCUTS TO PROCESS
+	for(int i = 0; i < this->_processingChoice->count(); ++i){
+		if( (QApplication::keyboardModifiers() & ~Qt::ShiftModifier ) == Qt::ControlModifier && event->key() == (Qt::Key_0 + i)){
+			return this->_processingChoice->setCurrentIndex(i);
+		}
+	}
 	return BasicWindow::keyPressEvent(event);
 }
 
