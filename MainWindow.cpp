@@ -19,7 +19,7 @@
 #include "Algorithm_FeatureProjection.h"
 #include "Algorithm_TaggingB.h"
 #include "Algorithm_CustomCondensationTemplateV2.h"
-#include "Matcher_GreyLevelDistanceMatcher.h"
+#include "Algorithm_CustomCondensationTemplateV3.h"
 
 //===================================================
 // Le seul code auquel il faut toucher pour rajouter des algos à pouvoir exécuter, attention à respecter l'ordre!!
@@ -43,32 +43,34 @@ FrameProcessor* MainWindow::generateProcessor(){
 	case 7:
 		return new CustomCondensationV1();
 	case 8:
-		return new CustomCondensationTemplateV2<GreyLevelDistanceMatcher<6> >();
+		return new CustomCondensationTemplateV2();
 	case 9:
-		return new Tagging();
+		return new CustomCondensationTemplateV3();
 	case 10:
-		return new OomsAlgorithmTest();
+		return new Tagging();
 	case 11:
-		return new OomsAlgorithmTest(0.05,5);
+		return new OomsAlgorithmTest();
 	case 12:
-		return new EyeFaceDetector();
+		return new OomsAlgorithmTest(0.05,5);
 	case 13:
-		return new TagNTrack();
+		return new EyeFaceDetector();
 	case 14:
-		return new Sub_BinaryMask();
+		return new TagNTrack();
 	case 15:
-		return new Watershed();
+		return new Sub_BinaryMask();
 	case 16:
-		return new MeanShift();
+		return new Watershed();
 	case 17:
-		return new Condensation();
+		return new MeanShift();
 	case 18:
-		return new FaceDetector_Surf();
+		return new Condensation();
 	case 19:
-		return new BinaryMaskWithOriginalFrame();
+		return new FaceDetector_Surf();
 	case 20:
-		return new FeatureProjection();
+		return new BinaryMaskWithOriginalFrame();
 	case 21:
+		return new FeatureProjection();
+	case 22:
 		return new TaggingB();
         //...
 
@@ -87,7 +89,8 @@ void MainWindow::initProcessingChoices(){
 	this->_processingChoice->addItem("TagNTrack (No blur)");
 	this->_processingChoice->addItem("Ooms Challenge");
 	this->_processingChoice->addItem("CustomCondensationV1");
-	this->_processingChoice->addItem("CustomCondensationTemplateV2 (GreyLevelDistanceMatcher)");
+	this->_processingChoice->addItem("CustomCondensationTemplateV2 (default)");
+	this->_processingChoice->addItem("CustomCondensationTemplateV3 (default)");
     this->_processingChoice->addItem("Tagging");
     this->_processingChoice->addItem("OomsAlgorithmTest (default)");
     this->_processingChoice->addItem("OomsAlgorithmTest (0.05,5)");
